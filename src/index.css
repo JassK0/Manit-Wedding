@@ -1,0 +1,166 @@
+@import '@fontsource-variable/fraunces/soft.css';
+@import '@fontsource-variable/fraunces/soft-italic.css';
+@import '@fontsource-variable/manrope/wght.css';
+
+/* ============================================================
+   DESIGN TOKENS
+   Rooted in phulkari thread colors: saturated, warm, hand-stitched.
+   Six core colors + one soft tint used for card fills.
+   ============================================================ */
+:root {
+  /* -- color: phulkari thread palette -- */
+  --paper: #fbf1e2; /* warm ivory ground, like unbleached khaddar cloth */
+  --ink: #26140f; /* near-black warm ink, for body text */
+  --maroon: #7c1f31; /* deep rani red/maroon, the spine + headings */
+  --maroon-dark: #591622;
+  --marigold: #e8a233; /* marigold gold thread, CTAs + highlights */
+  --marigold-light: #f6d998;
+  --mehndi: #4c6b3d; /* mehndi green thread */
+  --ferozi: #1f7a78; /* ferozi turquoise accent, links + interactive */
+  --rose: #d9897d; /* dusty rose, soft card fills */
+  --rose-tint: #f4e2d8;
+
+  /* -- surface -- */
+  --surface: #fffaf0;
+  --surface-2: #f6e9d3;
+  --border: rgba(38, 20, 15, 0.12);
+  --shadow-thread: 0 6px 20px -8px rgba(89, 22, 34, 0.35);
+
+  /* -- type -- */
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-body: 'Manrope Variable', 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* mobile-first type scale, generous for thumb-scroll reading */
+  --fs-body: 1.0625rem; /* 17px base, bigger than desktop default */
+  --fs-small: 0.875rem;
+  --fs-tag: 0.75rem;
+  --fs-h3: 1.25rem;
+  --fs-h2: 1.65rem;
+  --fs-h1: clamp(2.5rem, 13vw, 3.4rem);
+  --lh-body: 1.6;
+  --lh-tight: 1.15;
+
+  /* -- layout -- */
+  --gutter: 1.25rem;
+  --thread-lane: 2.25rem;
+  --radius: 18px;
+  --radius-sm: 10px;
+  --tap-min: 44px;
+
+  /*
+   * Deliberately light-only: this is a branded invite built around a warm
+   * ivory ground, not a general app. Auto-switching to a dark palette here
+   * previously left dark maroon headings sitting on a dark background with
+   * almost no contrast, so the theme is pinned regardless of OS setting.
+   */
+  color-scheme: light;
+  color: var(--ink);
+  background: var(--paper);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background-color: var(--paper);
+  /* A persistent, subtle phulkari diamond lattice, so the motif reads
+     throughout the scroll, not just in the hero. Baked in as a CSS
+     background (rather than an SVG element) to sidestep stacking-context
+     issues with fixed/negative-z-index layers sitting behind the canvas
+     background. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpolygon points='28,4 48,28 28,52 8,28' fill='none' stroke='%237c1f31' stroke-width='1.5' opacity='0.4'/%3E%3Ccircle cx='28' cy='28' r='3' fill='%23e8a233' opacity='0.55'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+#root {
+  min-height: 100svh;
+  overflow-x: clip;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: var(--lh-tight);
+  color: var(--maroon-dark);
+  margin: 0;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--ferozi);
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Visible focus states everywhere, mobile assistive tech included */
+:focus-visible {
+  outline: 3px solid var(--ferozi);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
