@@ -47,10 +47,9 @@ environment variables or build settings are needed beyond the defaults.
 
 ## Editing the itinerary
 
-Everything guests see (days, event times, dress codes, mood tags) comes from
-one file: [`src/data/events.ts`](src/data/events.ts). To change a date,
-time, or dress code, edit the relevant entry there, nothing else needs to
-change.
+Everything guests see (days, event times, dress codes) comes from one file:
+[`src/data/events.ts`](src/data/events.ts). To change a date, time, or
+dress code, edit the relevant entry there, nothing else needs to change.
 
 A few things worth knowing about that file:
 
@@ -63,10 +62,6 @@ A few things worth knowing about that file:
   for "multi-colour" days), `pattern` (renders a little phulkari-print
   swatch instead of a flat color), or `open` (no specific color, e.g. "wear
   anything"). Pick whichever shape fits.
-- `mood` is a short 3-5 word tag (not a paragraph) shown under each event's
-  hand-drawn ritual icon. If you add a new event, add a matching icon in
-  [`src/components/RitualIcon.tsx`](src/components/RitualIcon.tsx) (keyed by
-  the event's `id`), otherwise no icon renders.
 - Dates already match July 7-12, 2026 landing on Tue-Sun as given in the
   brief; if the week shifts, update every `date`/`start`/`end` accordingly.
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import type { WeddingEvent } from "../data/events";
 import { DressSwatch } from "./DressSwatch";
@@ -6,6 +6,7 @@ import { Confetti } from "./Confetti";
 import { CardMotif } from "./PhulkariMotifs";
 import { downloadIcs } from "../lib/ics";
 import { shareEvent } from "../lib/share";
+import { bumpCelebrateCount, getCelebrateCount } from "../lib/celebrateCounter";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import type { EventStatus } from "../lib/time";
 
@@ -26,7 +27,20 @@ export function EventCard({
 }) {
   const [shareMessage, setShareMessage] = useState<string | null>(null);
   const [burst, setBurst] = useState(0);
+  const [celebrateCount, setCelebrateCount] = useState<number | null>(null);
+  const [isBumping, setIsBumping] = useState(false);
   const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!celebratory) return;
+    let cancelled = false;
+    getCelebrateCount().then((count) => {
+      if (!cancelled) setCelebrateCount(count);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [celebratory]);
 
   async function handleShare() {
     const result = await shareEvent(event);
@@ -36,8 +50,13 @@ export function EventCard({
     }
   }
 
-  function handleCelebrate() {
+  async function handleCelebrate() {
     setBurst((n) => n + 1);
+    if (isBumping) return;
+    setIsBumping(true);
+    const count = await bumpCelebrateCount();
+    if (count !== null) setCelebrateCount(count);
+    setIsBumping(false);
   }
 
   return (
@@ -91,6 +110,13 @@ export function EventCard({
           </motion.button>
         )}
       </div>
+
+      {celebratory && celebrateCount !== null && (
+        <p className="event-card__celebrate-count">
+          &#127881; {celebrateCount.toLocaleString()}{" "}
+          {celebrateCount === 1 ? "person has" : "people have"} celebrated this
+        </p>
+      )}
 
       {shareMessage && (
         <p role="status" className="event-card__toast">
