@@ -114,7 +114,7 @@ export function EventCard({
       {celebratory && celebrateCount !== null && (
         <p className="event-card__celebrate-count">
           &#127881; {celebrateCount.toLocaleString()}{" "}
-          {celebrateCount === 1 ? "person has" : "people have"} celebrated this
+          {celebrateCount === 1 ? "celebration" : "celebrations"} so far
         </p>
       )}
 
