@@ -28,6 +28,15 @@ No component library, no CSS framework, no date library (native `Date` and
 library (the `.ics` file is ~15 lines of string building, see
 [`src/lib/ics.ts`](src/lib/ics.ts)).
 
+One exception to "no backend": the Celebrate button on the Wedding card shows
+a shared tap count (how many times *anyone* has tapped it), which needs
+somewhere to persist across visitors. That's the one network call in the
+whole site, to [counterapi.dev](https://counterapi.dev)'s free hit-counter
+API, see [`src/lib/celebrateCounter.ts`](src/lib/celebrateCounter.ts). If
+that service is unreachable the count just doesn't render, the button and
+confetti still work either way. If it ever goes away, that file is the only
+place that needs to change.
+
 ## Run it
 
 ```bash
